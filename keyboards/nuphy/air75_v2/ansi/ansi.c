@@ -206,11 +206,8 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case RM_VALU: // ensure LED powers on with brightness increase
-
-            // require tap and hold to turn on RGB leds. Prevents mis-clicks from my case...
-            f_rgb_led_press = record->event.pressed;
-            if (!is_rgb_led_on()) {
-                return false;
+            if (record->event.pressed) {
+                pwr_rgb_led_on();
             }
             return true;
 
