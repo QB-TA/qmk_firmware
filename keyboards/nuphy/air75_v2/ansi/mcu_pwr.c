@@ -38,6 +38,7 @@ static bool side_led_on = 0;
 
 void clear_report_buffer_and_queue(void);
 void side_rgb_refresh(void);
+void side_rgb_set_color_all(uint8_t r, uint8_t g, uint8_t b);
 void rgb_matrix_update_pwm_buffers(void);
 
 /** ================================================================
@@ -229,6 +230,7 @@ void enter_light_sleep(void) {
  * @note This is Nuphy's "open sourced" wake logic. It's not deep sleep.
  */
 void exit_light_sleep(void) {
+    sleeping = false;
     led_pwr_wake_handle();
 
     uart_send_cmd(CMD_HAND, 0, 1);
@@ -240,7 +242,6 @@ void exit_light_sleep(void) {
 
     // flag for RF wakeup workload.
     dev_info.rf_state = RF_WAKE;
-    sleeping          = false;
 }
 
 void led_pwr_sleep_handle(void) {
@@ -269,6 +270,7 @@ void led_pwr_wake_handle(void) {
     if (side_led_powered_off) {
         pwr_side_led_on();
         flush_side_leds = true;
+        side_rgb_set_color_all(0, 0, 0); // reset the colours otherwise it won't turn back on.
         side_rgb_refresh();
     }
 }
@@ -279,7 +281,7 @@ void pwr_rgb_led_off(void) {
     gpio_set_pin_output(DC_BOOST_PIN);
     gpio_write_pin_low(DC_BOOST_PIN);
     gpio_set_pin_input(DRIVER_LED_CS_PIN);
-    wait_us(200); // sleep a bit to let the LEDs power up?
+    wait_us(200); // sleep a bit to ensure LEDs power properly?
     rgb_led_on = 0;
 }
 
@@ -290,13 +292,14 @@ void pwr_rgb_led_on(void) {
     gpio_write_pin_high(DC_BOOST_PIN);
     gpio_set_pin_output(DRIVER_LED_CS_PIN);
     gpio_write_pin_low(DRIVER_LED_CS_PIN);
-    wait_us(200); // sleep a bit to let the LEDs power up?
+    wait_us(200); // sleep a bit to ensure LEDs power properly?
     rgb_led_on = 1;
 }
 
 void pwr_side_led_off(void) {
     if (!side_led_on) return;
     gpio_set_pin_input(DRIVER_SIDE_CS_PIN);
+    wait_us(200); // sleep a bit to ensure LEDs power properly?
     side_led_on = 0;
 }
 
@@ -304,6 +307,7 @@ void pwr_side_led_on(void) {
     if (sleeping || side_led_on) return;
     gpio_set_pin_output(DRIVER_SIDE_CS_PIN);
     gpio_write_pin_low(DRIVER_SIDE_CS_PIN);
+    wait_us(200); // sleep a bit to ensure LEDs power properly?
     side_led_on = 1;
 }
 
