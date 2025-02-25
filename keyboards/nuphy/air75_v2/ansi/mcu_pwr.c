@@ -25,7 +25,6 @@ static const pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 //------------------------------------------------
 // 外部变量
 extern DEV_INFO_STRUCT dev_info;
-extern bool            flush_side_leds;
 
 // static bool f_usb_deinit         = 0;
 static bool sleeping             = false;
@@ -269,9 +268,7 @@ void led_pwr_wake_handle(void) {
     }
     if (side_led_powered_off) {
         pwr_side_led_on();
-        flush_side_leds = true;
         side_rgb_set_color_all(0, 0, 0); // reset the colours otherwise it won't turn back on.
-        side_rgb_refresh();
     }
 }
 
