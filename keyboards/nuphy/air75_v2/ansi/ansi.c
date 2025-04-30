@@ -193,8 +193,10 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             f_bat_num_show = record->event.pressed;
             return false;
 
-        case RGB_TEST:
-            f_rgb_test_press = record->event.pressed;
+        case RGB_SWITCH:
+            if (record->event.pressed) {
+                rgb_switch();
+            }
             return false;
 
         case LINK_TO:

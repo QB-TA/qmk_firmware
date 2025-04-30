@@ -42,6 +42,7 @@ enum custom_keycodes {
     BAT_SHOW,
     BAT_NUM,
     RGB_TEST,
+    RGB_SWITCH,
     LINK_TO,
     KB_SLP
 };

@@ -187,6 +187,7 @@ void    sleep_handle(void);
 void    bat_pct_led_kb(void);
 void    update_bat_pct_rgb(uint8_t bat_percent);
 void    rgb_test_show(void);
+void    rgb_switch(void);
 void    gpio_init(void);
 void    long_press_key(void);
 void    break_all_key(void);

@@ -143,7 +143,7 @@ void long_press_key(void) {
                 default_layer_set(1 << 0);
                 keymap_config.nkro = 0;
             } else {
-                default_layer_set(1 << 2);
+                default_layer_set(1 << 8);
                 keymap_config.nkro = 1;
             }
         }
@@ -152,15 +152,15 @@ void long_press_key(void) {
     }
 
     // Enter the RGB test mode
-    if (f_rgb_test_press) {
-        rgb_test_press_delay++;
-        if (rgb_test_press_delay >= RGB_TEST_PRESS_DELAY) {
-            f_rgb_test_press = 0;
-            rgb_test_show();
-        }
-    } else {
-        rgb_test_press_delay = 0;
-    }
+    // if (f_rgb_test_press) {
+    //     rgb_test_press_delay++;
+    //     if (rgb_test_press_delay >= RGB_TEST_PRESS_DELAY) {
+    //         f_rgb_test_press = 0;
+    //         rgb_test_show();
+    //     }
+    // } else {
+    //     rgb_test_press_delay = 0;
+    // }
 }
 
 // RF repeat incase key break doesn't register properly...
@@ -280,7 +280,7 @@ void dial_sw_scan(void) {
     } else {
         if (dev_info.sys_sw_state != SYS_SW_WIN) {
             f_sys_show = 1;
-            default_layer_set(1 << 2);
+            default_layer_set(1 << 8);
             dev_info.sys_sw_state = SYS_SW_WIN;
             break_all_key();
             keymap_config.nkro = 1;
@@ -352,7 +352,7 @@ void dial_sw_fast_scan(void) {
     } else {
         if (dev_info.sys_sw_state != SYS_SW_WIN) {
             break_all_key();
-            default_layer_set(1 << 2);
+            default_layer_set(1 << 8);
             dev_info.sys_sw_state = SYS_SW_WIN;
             keymap_config.nkro    = 1;
         }
@@ -425,20 +425,25 @@ void bat_pct_led_kb(void) {
         bat_percent = 100;
     }
 
-    uint8_t led_idx_tens = bat_percent / 10;
-    uint8_t led_idx_ones = bat_percent % 10;
+    uint8_t led_idx_tens = (bat_percent + 4) / 10;
+    // uint8_t led_idx_ones = bat_percent % 10;i
 
     // set F key for battery percentage tens (e.g, 10%)
-    if (led_idx_tens > 0) {
-        user_set_rgb_color(led_idx_tens, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
+    if (led_idx_tens == 0) {
+        user_set_rgb_color(30, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
+        rgb_matrix_set_color_all(bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
+    } else {
+        for (uint8_t i = 1; i <= led_idx_tens; i++) {
+            user_set_rgb_color(30 - i, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
+        }
     }
 
     // set number key for battery percentage ones (e.g., 5 in 15%)
-    if (led_idx_ones == 0) {
-        user_set_rgb_color(20, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
-    } else {
-        user_set_rgb_color(30 - led_idx_ones, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
-    }
+    // if (led_idx_ones == 0) {
+    //     user_set_rgb_color(20, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
+    // } else {
+    //     user_set_rgb_color(30 - led_idx_ones, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
+    // }
 }
 
 /**
@@ -468,19 +473,21 @@ void update_bat_pct_rgb(uint8_t bat_percent) {
 
     // 120 hue is green, 0 is red on a 360 degree wheel but QMK is a uint8_t
     // so it needs to convert to relative to 255 - so green is actually 85.
-    uint8_t h = 85;
+    uint8_t h = 85; // green
     if (bat_pct <= 20) {
         h = 0; // red
     } else if (bat_pct <= 40) {
-        h = 21; // orange
-    } else if (bat_pct <= 80) {
         h = 43; // yellow
+    } else if (bat_pct <= 99) {
+        h = 85; // green
+    } else if (bat_pct == 100) {
+        h = 170; // blue
     }
 
     hsv_t hsv = {
         .h = h,
         .s = 255,
-        .v = 128, // 50% max brightness
+        .v = 255, // 100% max brightness
     };
 
     bat_pct_rgb = hsv_to_rgb_nocie(hsv); // this results in same calculation as colour pickers.
@@ -495,6 +502,21 @@ void user_set_rgb_color(int index, uint8_t red, uint8_t green, uint8_t blue) {
         pwr_rgb_led_on(); // turn on LEDs
     }
     rgb_matrix_set_color(index, red, green, blue);
+}
+
+/**
+ * @brief Dims RGB to 0 or 100
+ */
+void rgb_switch(void) {
+    if (rgblight_get_val() == 0) {
+        for (uint8_t i = 0; i <= 10; i++) {
+            rgblight_increase_val();
+        }
+    } else {
+        for (uint8_t i = 1; i <= 10; i++) {
+            rgblight_decrease_val();
+        }
+    }
 }
 
 /**

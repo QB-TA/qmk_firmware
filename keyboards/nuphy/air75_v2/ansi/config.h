@@ -34,3 +34,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SD1_RX_PAL_MODE                     0
 
 #define EECONFIG_KB_DATA_SIZE               10 // match used byte size of kb_config_t + 1 (seems to need extra byte)
+
+#define DYNAMIC_KEYMAP_MACRO_COUNT          128

@@ -118,6 +118,7 @@
     { "name": "Show Battery Ind.", "title": "Show Battery Indicator", "shortName": "Bat Show" },
     { "name": "Show Battery Temp", "title": "Show Battery Temporarily", "shortName": "Bat Tmp" },
     { "name": "RGB Test", "title": "RGB Light Test", "shortName": "RGB Test" },
+    { "name": "RGB Switch", "title": "RGB Switch", "shortName": "RGB Switch" },
     { "name": "Link Timeout", "title": "RF Link Timeout", "shortName": "Link TO" },
     { "name": "Sleep Timeout", "title": "KB Sleep Timeout", "shortName": "Sleep TO" }
   ]
