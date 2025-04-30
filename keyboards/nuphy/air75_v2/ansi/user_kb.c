@@ -401,15 +401,15 @@ void load_eeprom_data(void) {
  * @brief User config to default setting.
  */
 void kb_config_reset(void) {
-    /* first power on, set rgb matrix brightness off */
-    rgb_matrix_sethsv(255, 255, 0);
+    /* first power on, set rgb matrix brightness 100% */
+    rgb_matrix_sethsv(255, 255, 255);
 
     kb_config.init_flag       = 0xA5;
-    kb_config.side_mode       = 0; // SIDE_WAVE
-    kb_config.side_light      = 1;
+    kb_config.side_mode       = 3;
+    kb_config.side_light      = 3;
     kb_config.side_speed      = 2;
     kb_config.side_rgb        = 1;
-    kb_config.side_colour     = 0;
+    kb_config.side_colour     = 6;
     kb_config.sleep_mode      = SLEEP_MODE_DEEP;
     kb_config.rf_link_timeout = LINK_TIMEOUT_ALT;
     eeconfig_update_kb_datablock(&kb_config);
