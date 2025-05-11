@@ -34,7 +34,7 @@ bool f_send_channel    = 0;
 bool f_dial_sw_init_ok = 0;
 bool f_rf_sw_press     = 0;
 bool f_dev_reset_press = 0;
-// bool f_rgb_test_press  = 0;
+bool f_rgb_test_press  = 0;
 bool f_bat_num_show    = 0;
 
 uint8_t        rf_blink_cnt          = 0;
@@ -45,7 +45,7 @@ uint16_t       rf_link_show_time     = 0;
 uint16_t       no_act_time           = 0;
 uint16_t       dev_reset_press_delay = 0;
 uint16_t       rf_sw_press_delay     = 0;
-// uint16_t       rgb_test_press_delay  = 0;
+uint16_t       rgb_test_press_delay  = 0;
 uint16_t       rgb_led_last_act      = 0;
 uint16_t       side_led_last_act     = 0;
 uint16_t       sleep_time_delay      = SLEEP_TIME_DELAY;
