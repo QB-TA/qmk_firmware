@@ -433,8 +433,6 @@ void bat_pct_led_kb(void) {
         user_set_rgb_color(30, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
         for (int blink_cnt = 0; blink_cnt < 3; blink_cnt++) {
             rgb_matrix_set_color_all(bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
-            set_left_rgb(bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
-            set_right_rgb(bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
             wait_ms(200);
         }
     } else {
