@@ -482,11 +482,11 @@ void update_bat_pct_rgb(uint8_t bat_percent) {
     if (bat_pct <= 20) {
         h = 0; // red
     } else if (bat_pct <= 40) {
-        h = 43; // yellow
+        h = 21; // orange same as charging
     } else if (bat_pct <= 99) {
         h = 85; // green
     } else if (bat_pct == 100) {
-        h = 169; // blue
+        h = 170; // blue
     }
 
     hsv_t hsv = {
