@@ -429,17 +429,12 @@ void bat_pct_led_kb(void) {
     // uint8_t led_idx_ones = bat_percent % 10;i
 
     // set F key for battery percentage tens (e.g, 10%)
-    if (led_idx_tens == 0) {
-        user_set_rgb_color(30, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
-        for (int blink_cnt = 0; blink_cnt < 3; blink_cnt++) {
-            rgb_matrix_set_color_all(bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
-            wait_ms(200);
-        }
-    } else {
-        for (uint8_t i = 1; i <= led_idx_tens; i++) {
-            user_set_rgb_color(30 - i, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
-        }
+
+    for (uint8_t i = 0; i <= led_idx_tens; i++) {
+        user_set_rgb_color(30 - i, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
+        wait_ms(100);
     }
+    
 
     // set number key for battery percentage ones (e.g., 5 in 15%)
     // if (led_idx_ones == 0) {
