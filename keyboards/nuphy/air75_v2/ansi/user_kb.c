@@ -432,7 +432,6 @@ void bat_pct_led_kb(void) {
 
     for (uint8_t i = 0; i <= led_idx_tens; i++) {
         user_set_rgb_color(30 - i, bat_pct_rgb.r, bat_pct_rgb.g, bat_pct_rgb.b);
-        wait_ms(100);
     }
     
 
