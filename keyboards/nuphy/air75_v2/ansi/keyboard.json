@@ -21,7 +21,7 @@
         "tap_keycode_delay": 8
     },
     "dynamic_keymap": {
-        "layer_count": 16
+        "layer_count": 8
     },
     "processor": "STM32F072",
     "bootloader": "stm32-dfu",
