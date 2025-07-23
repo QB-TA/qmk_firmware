@@ -38,11 +38,11 @@ void deep_sleep_handle(void) {
     // break_all_key(); // reset keys before sleeping for new QMK lifecycle to handle on wake.
 
     // Visual cue for deep sleep on side LED.
-    pwr_side_led_on();
-    wait_ms(50); // give some time to ensure LED powers on.
-    side_rgb_set_color_all(0x99, 0x00, 0x00);
-    side_rgb_refresh();
-    wait_ms(500);
+    // pwr_side_led_on();
+    // wait_ms(50); // give some time to ensure LED powers on.
+    // side_rgb_set_color_all(0x99, 0x00, 0x00);
+    // side_rgb_refresh();
+    // wait_ms(500);
 
     // Sync again before sleeping. Without this, the wake keystroke is more likely to be lost.
     dev_sts_sync();
